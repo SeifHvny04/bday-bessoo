@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Bessooo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-1: #06142d;
+      --bg-2: #0c2f66;
+      --bg-3: #1555b1;
+      --page-1: #eef7ff;
+      --page-2: #dceeff;
+      --accent: #2f7cf0;
+      --accent-2: #66a8ff;
+      --accent-3: #cfe4ff;
+      --text: #f4f8ff;
+      --card: rgba(255, 255, 255, 0.72);
+      --shadow: 0 24px 60px rgba(2, 12, 35, 0.34);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Manrope", "Segoe UI", sans-serif;
+      color: var(--text);
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 20% 18%, rgba(102, 168, 255, 0.24), transparent 28%),
+        radial-gradient(circle at 82% 14%, rgba(47, 124, 240, 0.18), transparent 22%),
+        radial-gradient(circle at 50% 82%, rgba(8, 37, 92, 0.52), transparent 35%),
+        linear-gradient(145deg, var(--bg-1) 0%, var(--bg-2) 46%, var(--bg-3) 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(rgba(255, 255, 255, 0.45) 1px, transparent 1px),
+        radial-gradient(rgba(102, 168, 255, 0.08) 1px, transparent 1px),
+        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.18), transparent 38%);
+      background-size: 34px 34px, 68px 68px;
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .screen {
+      position: relative;
+      z-index: 1;
+    }
+
+    #lock-screen {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(102, 168, 255, 0.26), transparent 26%),
+        radial-gradient(circle at 82% 18%, rgba(47, 124, 240, 0.2), transparent 22%),
+        linear-gradient(145deg, var(--bg-1), var(--bg-2) 56%, var(--bg-3));
+    }
+
+    .lock-card {
+      width: min(100%, 420px);
+      padding: 30px 24px 26px;
+      border-radius: 30px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(232, 241, 255, 0.82));
+      box-shadow:
+        0 30px 70px rgba(1, 10, 32, 0.34),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.74);
+      backdrop-filter: blur(20px);
+      animation: riseIn 0.9s ease both;
+    }
+
+    .lock-badge {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin: 0 auto 14px;
+      display: grid;
+      place-items: center;
+      font-size: 1.5rem;
+      color: white;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 16px 28px rgba(47, 124, 240, 0.28);
+    }
+
+    .lock-card h2 {
+      text-align: center;
+      font-size: 1.65rem;
+      color: #1349ad;
+      margin-bottom: 8px;
+    }
+
+    .lock-card p {
+      text-align: center;
+      color: rgba(12, 25, 52, 0.7);
+      margin-bottom: 18px;
+      line-height: 1.7;
+      font-size: 0.96rem;
+    }
+
+    .password-row {
+      display: grid;
+      gap: 14px;
+      justify-items: center;
+    }
+
+    .pin-wrap {
+      position: relative;
+      width: min(100%, 290px);
+      display: flex;
+      justify-content: center;
+      cursor: text;
+      user-select: none;
+    }
+
+    .pin-input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .pin-dots {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      padding: 14px 12px;
+      border-radius: 18px;
+      background: rgba(9, 30, 74, 0.06);
+      border: 1px solid rgba(47, 124, 240, 0.14);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+
+    .pin-wrap:focus-within .pin-dots {
+      border-color: rgba(47, 124, 240, 0.35);
+      box-shadow:
+        0 0 0 4px rgba(47, 124, 240, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+
+    .pin-dot {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      border: 1.5px solid rgba(47, 124, 240, 0.28);
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.9);
+      transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .pin-dot.filled {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-color: rgba(47, 124, 240, 0.56);
+      box-shadow: 0 8px 16px rgba(47, 124, 240, 0.28);
+      transform: scale(1.03);
+    }
+
+    button {
+      border: none;
+      border-radius: 12px;
+      padding: 10px 18px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 14px 28px rgba(47, 124, 240, 0.26);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 32px rgba(47, 124, 240, 0.34);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .password-row button {
+      width: min(100%, 290px);
+    }
+
+    .error {
+      color: #144fbc;
+      text-align: center;
+      margin-top: 2px;
+      min-height: 22px;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: 0.25s ease;
+      font-size: 0.9rem;
+    }
+
+    .error.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #main-content {
+      display: none;
+      min-height: 100vh;
+      padding: 36px 16px 120px;
+    }
+
+    .hero {
+      width: min(100%, 1100px);
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-title {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(2.4rem, 6.2vw, 5rem);
+      font-weight: 800;
+      color: rgba(243, 248, 255, 0.78);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      text-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.35),
+        0 0 2px rgba(255, 255, 255, 0.5);
+      margin-bottom: 0;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      backdrop-filter: none;
+      box-shadow: none;
+      z-index: 1;
+    }
+
+    .hero-subtitle {
+      position: absolute;
+      inset: calc(50% + 78px) auto auto 50%;
+      transform: translateX(-50%);
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      max-width: 640px;
+      margin: 0;
+      line-height: 1.9;
+      color: rgba(241, 247, 255, 0.88);
+      z-index: 4;
+    }
+
+    .photo-stage {
+      position: relative;
+      width: min(100%, 1100px);
+      min-height: 640px;
+      margin: 0 auto;
+      padding: 10px 0 40px;
+    }
+
+    .photo-card {
+      position: absolute;
+      border-radius: 24px;
+      overflow: hidden;
+      background: rgba(246, 249, 255, 0.95);
+      padding: 10px 10px 8px;
+      border: 1px solid rgba(186, 209, 247, 0.42);
+      box-shadow: 0 16px 36px rgba(1, 10, 28, 0.25);
+      transform: rotate(var(--rotate, 0deg));
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      animation: floatCard 7s ease-in-out infinite;
+      z-index: 3;
+    }
+
+    .photo-card:hover {
+      transform: translateY(-8px) rotate(0deg) scale(1.02);
+      box-shadow: 0 24px 48px rgba(1, 10, 28, 0.32);
+      z-index: 4;
+    }
+
+    .photo-card img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+      aspect-ratio: 4 / 5;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+    }
+
+    .photo-card small {
+      display: block;
+      margin-top: 8px;
+      font-weight: 700;
+      color: #1656ae;
+      text-shadow: none;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 56% auto auto 50%;
+      transform: translate(-50%, -50%);
+      width: min(88%, 560px);
+      display: grid;
+      justify-items: center;
+      gap: 14px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-overlay .hero-title {
+      position: static;
+      transform: none;
+      font-size: clamp(2.2rem, 5.2vw, 4.5rem);
+      padding: 0;
+    }
+
+    .hero-overlay .hero-subtitle {
+      position: static;
+      transform: none;
+      max-width: 560px;
+      margin: 0;
+      padding: 0 10px;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    .photo-1 {
+      top: 18px;
+      right: 6%;
+      width: min(30vw, 250px);
+      --rotate: -8deg;
+    }
+
+    .photo-2 {
+      top: 160px;
+      left: 7%;
+      width: min(26vw, 220px);
+      --rotate: 7deg;
+    }
+
+    .photo-3 {
+      top: 84px;
+      left: 39%;
+      width: min(30vw, 260px);
+      --rotate: -2deg;
+    }
+
+    .photo-4 {
+      top: 390px;
+      right: 14%;
+      width: min(28vw, 230px);
+      --rotate: 9deg;
+    }
+
+    .photo-5 {
+      top: 390px;
+      left: 18%;
+      width: min(24vw, 210px);
+      --rotate: -6deg;
+    }
+
+    .scroll-hint {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      opacity: 1;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 0;
+      padding: 12px 20px;
+      border-radius: 999px;
+      background: rgba(242, 248, 255, 0.94);
+      box-shadow: 0 14px 36px rgba(1, 10, 28, 0.22);
+      backdrop-filter: blur(10px);
+      animation: none;
+      z-index: 12;
+    }
+
+    .scroll-hint span {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .arrow-down {
+      font-size: 1.5rem;
+      color: #0c3f92;
+      animation: hintBounce 1.4s ease-in-out infinite;
+    }
+
+    .story {
+      width: min(100%, 900px);
+      margin: 40px auto 0;
+      display: grid;
+      gap: 24px;
+    }
+
+    .story-block {
+      opacity: 0;
+      transform: translateY(48px) scale(0.98);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      border-radius: 28px;
+      background: rgba(7, 18, 45, 0.38);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 24px;
+    }
+
+    .story-block.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .story-block h2 {
+      color: #f4fbff;
+      font-size: clamp(1.6rem, 4vw, 2.3rem);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .story-block p {
+      font-size: clamp(1.05rem, 2.3vw, 1.35rem);
+      line-height: 2.05;
+      text-align: center;
+      color: rgba(244, 251, 255, 0.9);
+      white-space: pre-line;
+    }
+
+    .photo-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .photo-row img {
+      width: 100%;
+      border-radius: 20px;
+      aspect-ratio: 1 / 1.1;
+      object-fit: cover;
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.18);
+    }
+
+    .memory-video {
+      width: 100%;
+      border-radius: 22px;
+      margin-top: 18px;
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.24);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .mini-message {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.12);
+      font-size: 1.02rem;
+      text-align: center;
+      color: rgba(244, 251, 255, 0.9);
+    }
+
+    .flower {
+      position: fixed;
+      top: -60px;
+      z-index: 0;
+      pointer-events: none;
+      font-size: clamp(1.6rem, 3vw, 2.5rem);
+      animation: flowerFall linear forwards;
+      filter: drop-shadow(0 8px 14px rgba(25, 84, 166, 0.14));
+    }
+
+    .unlock-note {
+      margin-top: 10px;
+      font-size: 0.95rem;
+      color: rgba(244, 251, 255, 0.7);
+      text-align: center;
+    }
+
+    @keyframes riseIn {
+      from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes hintBounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-6px);
+      }
+    }
+
+    @keyframes flowerFall {
+      from {
+        transform: translate3d(0, -80px, 0) rotate(0deg);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      to {
+        transform: translate3d(var(--drift, 0px), 115vh, 0) rotate(var(--spin, 180deg));
+        opacity: 0;
+      }
+    }
+
+    @keyframes floatCard {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(var(--rotate, 0deg));
+      }
+
+      50% {
+        transform: translateY(-10px) rotate(calc(var(--rotate, 0deg) + 1deg));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .photo-stage {
+        min-height: 920px;
+      }
+
+      .photo-1 {
+        top: 20px;
+        right: 4%;
+        width: 38vw;
+      }
+
+      .photo-2 {
+        top: 210px;
+        left: 5%;
+        width: 34vw;
+      }
+
+      .photo-3 {
+        top: 112px;
+        left: 34%;
+        width: 38vw;
+      }
+
+      .photo-4 {
+        top: 560px;
+        right: 10%;
+        width: 34vw;
+      }
+
+      .photo-5 {
+        top: 610px;
+        left: 12%;
+        width: 34vw;
+      }
+
+      .photo-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      #main-content {
+        padding-inline: 12px;
+      }
+
+      .lock-card {
+        padding: 26px 16px;
+      }
+
+      .password-row {
+        flex-direction: column;
+      }
+
+      .password-row button,
+      .password-row input {
+        width: min(100%, 190px);
+        max-width: 190px;
+      }
+
+      input[type="password"] {
+        height: 38px;
+        padding: 8px 12px;
+        width: min(100%, 190px);
+      }
+
+      button {
+        padding: 9px 16px;
+      }
+
+      .photo-stage {
+        min-height: 820px;
+        padding-top: 44px;
+      }
+
+      .hero-overlay {
+        inset: 58% auto auto 50%;
+        width: min(92%, 380px);
+      }
+
+      .hero-overlay .hero-title {
+        font-size: clamp(1.9rem, 10.5vw, 2.8rem);
+      }
+
+      .hero-overlay .hero-subtitle {
+        font-size: 0.95rem;
+      }
+
+      .photo-card small {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <audio id="bg-music" loop preload="auto">
+    <source src="C:\Users\Lenovo\Desktop\basmala\Happy Birthday (Piano Version).mp3" type="audio/mpeg">
+  </audio>
+
+  <div id="lock-screen" class="screen">
+    <div class="lock-card">
+      <div class="lock-badge">🎂</div>
+      <h2>Enter Password</h2>
+      <p>Enter the 6-digit code to open the surprise.</p>
+      <div class="password-row">
+        <div class="pin-wrap" id="pin-wrap" aria-label="6 digit password input">
+          <input type="text" id="pass-input" class="pin-input" inputmode="numeric" autocomplete="one-time-code"
+            maxlength="6" aria-label="Password input">
+          <div class="pin-dots" id="pin-dots" aria-hidden="true">
+            <span class="pin-dot"></span>
+            <span class="pin-dot"></span>
+            <span class="pin-dot"></span>
+            <span class="pin-dot"></span>
+            <span class="pin-dot"></span>
+            <span class="pin-dot"></span>
+          </div>
+        </div>
+        <button id="unlock-btn" type="button">Open Surprise</button>
+      </div>
+      <div id="error-msg" class="error">Wrong password, try again ❤️</div>
+    </div>
+  </div>
+
+  <main id="main-content" class="screen">
+    <section class="hero">
+      <div class="photo-stage">
+        <div class="hero-overlay">
+          <div class="hero-title">Happy birthday Bessooo</div>
+        </div>
+        <figure class="photo-card photo-1">
+          <img src="IMG_9609.PNG" alt="Birthday photo 1">
+        </figure>
+
+        <figure class="photo-card photo-2">
+          <img src="IMG_9608.PNG" alt="Birthday photo 2">
+        </figure>
+
+        <figure class="photo-card photo-3">
+          <img src="766bb20b-23f8-433b-a07f-c1dfd9bed686.jpg" alt="Birthday photo 3">
+        </figure>
+
+        <figure class="photo-card photo-4">
+          <img src="d7007dbd-187f-495d-abde-b5863a1d2e89.jpg" alt="Birthday photo 4">
+        </figure>
+
+        <figure class="photo-card photo-5">
+          <img src="IMG_9610.PNG" alt="Birthday photo 5">
+        </figure>
+      </div>
+
+      <div class="scroll-hint" id="scroll-hint">
+        <span>Scroll down</span>
+        <div class="arrow-down">↓</div>
+      </div>
+    </section>
+
+    <section class="story">
+      <article class="story-block reveal">
+        <h2>For the Birthday Girl Bessoo ❤️</h2>
+        <p>
+
+          Happy Birthday to someone who truly makes life lighter and better.
+          This little space was built just for you, to celebrate the genuine person you are. You’ve always been the
+          closest to me—the one person I could truly be myself around, completely let my guard down with, and trust
+          without a second thought.
+          Thank you for being so solid, for standing by me through the thick and thin, the good days and the heavy ones.
+          I know things haven't been easy between us lately, and we’ve gone through a rough patch, but that never
+          changes what you mean to me.
+          I hope every picture here brings a genuine smile to your face, and reminds you how deeply valued you are and
+          just how much having you in my life truly matters.
+        </p>
+      </article>
+
+      <article class="story-block reveal">
+        <h2>Photos and Notes</h2>
+        <div class="photo-row">
+          <img src="WhatsApp Image 2026-06-21 at 11.58.10 PM (1).jpeg" alt="Memory photo 1">
+          <img src="WhatsApp Image 2026-06-23 at 8.59.57 PM (2).jpeg" alt="Memory photo 2">
+          <img src="WhatsApp Image 2026-07-06 at 1.29.05 AM (1).jpeg" alt="Memory photo 3">
+          <img src="WhatsApp Image 2026-03-25 at 12.54.45 AM.jpeg" alt="Memory photo 4">
+          <img src="WhatsApp Image 2026-02-07 at 1.46.54 AM.jpeg" alt="Memory photo 5">
+
+
+        </div>
+        <video class="memory-video" autoplay loop muted playsinline preload="auto">
+          <source src="202609042035.mp4" type="video/mp4">
+        </video>
+        <div class="mini-message">
+          Unforgettable days with memories that will always stay right there with me ✨
+        </div>
+      </article>
+
+      <article class="story-block reveal">
+        <h2>One Last Note 🤍</h2>
+        <p>
+          No matter where life takes us or what bumps we hit along the road, the memories we’ve shared and the bond we
+          built will always hold a very special place for me. You truly are so special to me.
+          I wish you a year ahead full of peace, real happiness, and achieving every single thing you wish for. You
+          genuinely deserve the absolute best.
+          Happy Birthday, Bessoo! 🎂
+        </p>
+      </article>
+
+    </section>
+  </main>
+
+  <script>
+    const CORRECT_PASSWORD = "492004";
+    const music = document.getElementById("bg-music");
+    const lockScreen = document.getElementById("lock-screen");
+    const mainContent = document.getElementById("main-content");
+    const errorMsg = document.getElementById("error-msg");
+    const passwordInput = document.getElementById("pass-input");
+    const unlockBtn = document.getElementById("unlock-btn");
+    const scrollHint = document.getElementById("scroll-hint");
+    const pinWrap = document.getElementById("pin-wrap");
+    const pinDots = document.querySelectorAll(".pin-dot");
+    const revealBlocks = document.querySelectorAll(".reveal");
+
+    function createFlower() {
+      const flowerIcons = ["🌸", "🌺", "🌷", "🌹", "💐", "🌻"];
+      const flower = document.createElement("div");
+      flower.className = "flower";
+      flower.textContent = flowerIcons[Math.floor(Math.random() * flowerIcons.length)];
+      flower.style.left = Math.random() * 100 + "vw";
+      flower.style.setProperty("--drift", (Math.random() * 120 - 60) + "px");
+      flower.style.setProperty("--spin", (180 + Math.random() * 360) + "deg");
+      flower.style.animationDuration = (6 + Math.random() * 6) + "s";
+      flower.style.fontSize = (18 + Math.random() * 18) + "px";
+      document.body.appendChild(flower);
+      setTimeout(() => flower.remove(), 12000);
+    }
+
+    function startFlowers() {
+      createFlower();
+      setInterval(createFlower, 650);
+    }
+
+    function syncPinDots(value) {
+      pinDots.forEach((dot, index) => {
+        dot.classList.toggle("filled", index < value.length);
+      });
+    }
+
+    function openSurprise() {
+      const input = passwordInput.value.trim();
+      errorMsg.classList.remove("show");
+
+      if (input === CORRECT_PASSWORD) {
+        lockScreen.style.display = "none";
+        mainContent.style.display = "block";
+        scrollHint.style.opacity = "1";
+        scrollHint.style.transform = "translateX(-50%) translateY(0)";
+        scrollHint.style.pointerEvents = "auto";
+        updateReveal();
+        startFlowers();
+
+        music.play().catch(() => {
+          console.log("Audio needs the browser to allow playback.");
+        });
+
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      } else {
+        errorMsg.textContent = "Wrong password, try again ❤️";
+        errorMsg.classList.add("show");
+      }
+    }
+
+    function updateReveal() {
+      const trigger = window.innerHeight * 0.82;
+      revealBlocks.forEach((block) => {
+        const top = block.getBoundingClientRect().top;
+        if (top < trigger) {
+          block.classList.add("visible");
+        } else {
+          block.classList.remove("visible");
+        }
+      });
+
+      if (revealBlocks.length > 0) {
+        const firstTop = revealBlocks[0].getBoundingClientRect().top;
+        if (window.scrollY > 120 && firstTop < window.innerHeight * 0.65) {
+          scrollHint.style.opacity = "0";
+          scrollHint.style.transform = "translateX(-50%) translateY(10px)";
+          scrollHint.style.pointerEvents = "none";
+        } else {
+          scrollHint.style.opacity = "1";
+          scrollHint.style.transform = "translateX(-50%) translateY(0)";
+          scrollHint.style.pointerEvents = "auto";
+        }
+      }
+    }
+
+    unlockBtn.addEventListener("click", openSurprise);
+    pinWrap.addEventListener("click", () => passwordInput.focus());
+    passwordInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        openSurprise();
+      }
+    });
+    passwordInput.addEventListener("input", () => {
+      const digitsOnly = passwordInput.value.replace(/\D/g, "").slice(0, 6);
+      if (passwordInput.value !== digitsOnly) {
+        passwordInput.value = digitsOnly;
+      }
+      syncPinDots(digitsOnly);
+    });
+
+    window.addEventListener("scroll", updateReveal, { passive: true });
+    window.addEventListener("resize", updateReveal);
+
+    syncPinDots("");
+    updateReveal();
+  </script>
+</body>
+
+</html>
